@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Casino Online</title>
+    <title>Neon Casino Online & Chat</title>
 
     <style>
         * {
@@ -22,33 +22,35 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
         }
 
         .casino-card {
             background: rgba(255, 255, 255, 0.03);
             border: 2px solid #ff007f;
             box-shadow: 0 0 15px #ff007f, inset 0 0 15px rgba(255, 0, 127, 0.2);
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 15px;
             text-align: center;
             width: 100%;
-            max-width: 380px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         h1 {
             color: #00f3ff;
             text-shadow: 0 0 10px #00f3ff;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+            font-size: 1.6rem;
         }
 
-        /* Экран входа */
+        /* Авторизация */
         .auth-box {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 10px;
+            margin-top: 10px;
         }
 
         input {
@@ -62,7 +64,7 @@
             outline: none;
         }
 
-        .btn-auth {
+        .btn-main {
             background: #00f3ff;
             color: #000;
             border: none;
@@ -73,114 +75,251 @@
             cursor: pointer;
         }
 
-        /* Игровое окно */
-        .game-box {
+        /* Основной интерфейс */
+        .main-app {
             display: none;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .user-info {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .balance-board {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
+        .user-bar {
+            display: flex;
+            justify-content: space-between;
             background: #120826;
-            padding: 12px;
+            padding: 10px 15px;
             border-radius: 12px;
             border: 1px solid #00f3ff;
+            font-size: 0.95rem;
         }
 
-        .balance-board span {
-            color: #ffcc00;
+        .user-bar span { color: #ffcc00; font-weight: bold; }
+
+        /* Навигация по вкладкам */
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background: #150a2a;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            padding: 8px 10px;
+            font-size: 0.85rem;
             font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 25%;
         }
 
-        /* Слоты */
+        .tab-btn.active {
+            background: #ff007f;
+            color: #fff;
+            box-shadow: 0 0 8px #ff007f;
+        }
+
+        /* Контент вкладок */
+        .tab-content {
+            display: none;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            min-height: 260px;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Игра: Слоты */
         .slots-container {
             display: flex;
             justify-content: space-between;
             background: #000;
             padding: 10px;
-            border-radius: 16px;
+            border-radius: 12px;
             border: 2px solid #ffcc00;
-            margin-bottom: 20px;
+            margin: 15px 0;
         }
 
         .reel {
             width: 30%;
-            height: 90px;
+            height: 75px;
             background: #111;
-            border-radius: 10px;
-            font-size: 3rem;
-            line-height: 90px;
-            position: relative;
+            border-radius: 8px;
+            font-size: 2.5rem;
+            line-height: 75px;
             overflow: hidden;
         }
 
-        .spinning {
-            animation: spin 0.1s infinite linear;
-        }
-
+        .spinning { animation: spin 0.1s infinite linear; }
         @keyframes spin {
             0% { transform: translateY(-5px); filter: blur(2px); }
             50% { transform: translateY(5px); filter: blur(4px); }
             100% { transform: translateY(-5px); filter: blur(2px); }
         }
 
-        /* Управление */
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        /* Игра: Лото */
+        .lotto-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 15px 0;
         }
 
+        .lotto-num {
+            background: #221548;
+            border: 1px solid #00f3ff;
+            padding: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .lotto-num.selected {
+            background: #ff007f;
+            border-color: #fff;
+        }
+
+        /* Игра: Карты */
+        .card-display {
+            font-size: 4rem;
+            background: #fff;
+            color: #000;
+            width: 90px;
+            height: 120px;
+            margin: 10px auto;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .card-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-higher { background: #00ff66; color: #000; }
+        .btn-lower { background: #ff3333; }
+
+        /* Общие кнопки управления ставкой */
         .bet-control {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            font-size: 1.1rem;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .bet-btn {
             background: #221548;
             border: 1px solid #00f3ff;
             color: #fff;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            font-size: 1.2rem;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
         }
 
-        .spin-btn {
+        .action-btn {
             background: linear-gradient(45deg, #ff007f, #ffcc00);
             border: none;
-            padding: 16px;
-            border-radius: 14px;
+            padding: 12px;
+            border-radius: 10px;
             color: #fff;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+            width: 100%;
         }
 
-        .spin-btn:disabled {
-            background: #333;
-            box-shadow: none;
+        .action-btn:disabled { background: #333; }
+
+        /* Чат */
+        .chat-messages {
+            height: 180px;
+            overflow-y: auto;
+            background: #0a0518;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: left;
+            font-size: 0.85rem;
+            border: 1px solid #221548;
         }
 
-        .message {
-            margin-top: 15px;
-            min-height: 20px;
-            font-size: 1rem;
+        .chat-msg {
+            word-break: break-word;
+        }
+
+        .chat-msg .author {
+            color: #00f3ff;
             font-weight: bold;
         }
 
+        .chat-input-box {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .chat-input-box input {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .chat-input-box button {
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        /* Список игроков онлайн */
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            background: #150a2a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .game-status {
+            min-height: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
         .win { color: #00ff66; }
         .lose { color: #ff3333; }
     </style>
@@ -188,45 +327,87 @@
 <body>
 
     <div class="casino-card">
-        <h1>CASINO 777</h1>
+        <h1>CASINO ONLINE</h1>
 
-        <!-- Логин -->
+        <!-- ЭКРАН ВХОДА -->
         <div class="auth-box" id="auth-box">
-            <input type="text" id="username" placeholder="Введите ваш никнейм">
-            <button class="btn-auth" id="login-btn">Войти в игру</button>
+            <input type="text" id="username" placeholder="Введите ваш никнейм" maxlength="15">
+            <button class="btn-main" id="login-btn">Войти в казино</button>
         </div>
 
-        <!-- Игра -->
-        <div class="game-box" id="game-box">
-            <div class="user-info">Игрок: <b id="player-display" style="color:#00f3ff"></b></div>
-            <div class="balance-board">Баланс: <span id="balance">0</span> $</div>
-
-            <div class="slots-container">
-                <div class="reel" id="reel1">🎰</div>
-                <div class="reel" id="reel2">🎰</div>
-                <div class="reel" id="reel3">🎰</div>
+        <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+        <div class="main-app" id="main-app">
+            
+            <!-- Панель игрока -->
+            <div class="user-bar">
+                <div>Игрок: <b id="player-display" style="color:#00f3ff"></b></div>
+                <div>Баланс: <span id="balance">0</span> $</div>
             </div>
 
-            <div class="controls">
-                <div class="bet-control">
-                    <button class="bet-btn" id="bet-minus">-</button>
-                    <span>Ставка: <b id="bet-amount" style="color: #00f3ff;">50</b></span>
-                    <button class="bet-btn" id="bet-plus">+</button>
+            <!-- Вкладки навигации -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('tab-slots', this)">🎰 Слоты</button>
+                <button class="tab-btn" onclick="switchTab('tab-lotto', this)">🎱 Лото</button>
+                <button class="tab-btn" onclick="switchTab('tab-cards', this)">🃏 Карты</button>
+                <button class="tab-btn" onclick="switchTab('tab-chat', this)">💬 Чат</button>
+            </div>
+
+            <!-- Вкладка 1: Слоты -->
+            <div id="tab-slots" class="tab-content active">
+                <div class="slots-container">
+                    <div class="reel" id="reel1">🎰</div>
+                    <div class="reel" id="reel2">🎰</div>
+                    <div class="reel" id="reel3">🎰</div>
                 </div>
-
-                <button class="spin-btn" id="spin-btn">КРУТИТЬ</button>
+                <div class="bet-control">
+                    <button class="bet-btn" onclick="changeBet(-10)">-</button>
+                    <span>Ставка: <b id="bet-amount" style="color: #00f3ff;">50</b></span>
+                    <button class="bet-btn" onclick="changeBet(10)">+</button>
+                </div>
+                <button class="action-btn" id="spin-btn">Крутить</button>
+                <div class="game-status" id="slots-status"></div>
             </div>
 
-            <div class="message" id="message">Удачи!</div>
+            <!-- Вкладка 2: Лото -->
+            <div id="tab-lotto" class="tab-content">
+                <p style="font-size:0.85rem; color:#aaa;">Угадай выпавшее число (1-10) и получи x5!</p>
+                <div class="lotto-grid" id="lotto-grid"></div>
+                <button class="action-btn" id="lotto-btn">Испытать удачу (50$)</button>
+                <div class="game-status" id="lotto-status"></div>
+            </div>
+
+            <!-- Вкладка 3: Карты (Больше/Меньше) -->
+            <div id="tab-cards" class="tab-content">
+                <p style="font-size:0.85rem; color:#aaa;">Следующая карта будет больше или меньше?</p>
+                <div class="card-display" id="card-display">❓</div>
+                <div class="card-btns">
+                    <button class="card-btn btn-higher" id="card-higher">Больше ↑</button>
+                    <button class="card-btn btn-lower" id="card-lower">Меньше ↓</button>
+                </div>
+                <div class="game-status" id="cards-status"></div>
+            </div>
+
+            <!-- Вкладка 4: Чат и Онлайн-игроки -->
+            <div id="tab-chat" class="tab-content">
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input-box">
+                    <input type="text" id="chat-input" placeholder="Сообщение..." maxlength="100">
+                    <button class="btn-main" id="chat-send">▶</button>
+                </div>
+                <div style="margin-top: 10px;">
+                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 5px;">Игроки в сети:</p>
+                    <div class="players-list" id="players-list"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- Модульное подключение Firebase v9+ -->
+    <!-- Firebase v9+ JS SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, get, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get, set, update, push, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Твоя конфигурация Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAKXp7pFgT990uxI1FB-d-iIdiSGC1ZvBw",
             authDomain: "kazik-57765.firebaseapp.com",
@@ -234,102 +415,113 @@
             projectId: "kazik-57765",
             storageBucket: "kazik-57765.firebasestorage.app",
             messagingSenderId: "488545064083",
-            appId: "1:488545064083:web:a2f755e0a3431d2e5f6966",
-            measurementId: "G-1FR3X2RRZD"
+            appId: "1:488545064083:web:a2f755e0a3431d2e5f6966"
         };
 
-        // Инициализация
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        const symbols = ['🍒', '🍋', '🍇', '🔔', '💎', '7️⃣'];
+        // Игровые переменные
         let currentUser = "";
         let balance = 1000;
         let currentBet = 50;
 
-        // Элементы UI
-        const loginBtn = document.getElementById('login-btn');
-        const spinBtn = document.getElementById('spin-btn');
-        const betMinus = document.getElementById('bet-minus');
-        const betPlus = document.getElementById('bet-plus');
+        // Вход
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            const input = document.getElementById('username').value.trim();
+            if (!input) return alert("Введите ник!");
 
-        // Вход в систему
-        loginBtn.addEventListener('click', async () => {
-            const nameInput = document.getElementById('username').value.trim();
-            if (!nameInput) return alert("Введите имя!");
-
-            currentUser = nameInput.toLowerCase().replace(/[^a-z0-9]/g, "");
-            document.getElementById('player-display').textContent = nameInput;
+            currentUser = input.toLowerCase().replace(/[^a-z0-9_]/g, "");
+            document.getElementById('player-display').textContent = input;
 
             const userRef = ref(database, 'users/' + currentUser);
-            
-            try {
-                const snapshot = await get(userRef);
-                if (snapshot.exists()) {
-                    balance = snapshot.val().balance;
-                } else {
-                    balance = 1000; // Старт для новых игроков
-                    await set(userRef, { balance: balance });
-                }
+            const snapshot = await get(userRef);
 
-                document.getElementById('balance').textContent = balance;
-                document.getElementById('auth-box').style.display = 'none';
-                document.getElementById('game-box').style.display = 'block';
-            } catch (error) {
-                alert("Ошибка подключения к базе данных! Проверь правила Realtime Database в Firebase.");
-                console.error(error);
+            if (snapshot.exists()) {
+                balance = snapshot.val().balance;
+            } else {
+                balance = 1000;
+                await set(userRef, { balance: balance, name: input });
             }
+
+            document.getElementById('balance').textContent = balance;
+            document.getElementById('auth-box').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+
+            // Отметка присутствия (Онлайн)
+            const onlineRef = ref(database, 'online/' + currentUser);
+            set(onlineRef, { name: input, balance: balance });
+            onDisconnect(onlineRef).remove();
+
+            // Запуск слушателей Firebase
+            initChat();
+            initOnlinePlayers();
         });
 
         // Сохранение баланса
-        function updateDbBalance() {
+        function updateBalance(newBalance) {
+            balance = newBalance;
+            document.getElementById('balance').textContent = balance;
             if (currentUser) {
                 update(ref(database, 'users/' + currentUser), { balance: balance });
+                update(ref(database, 'online/' + currentUser), { balance: balance });
             }
         }
 
-        // Изменение ставки
-        betMinus.addEventListener('click', () => changeBet(-10));
-        betPlus.addEventListener('click', () => changeBet(10));
+        // Переключение вкладок
+        window.switchTab = function(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        };
 
-        function changeBet(amount) {
-            if (currentBet + amount >= 10 && currentBet + amount <= balance) {
-                currentBet += amount;
+        // --- ИГРА 1: СЛОТЫ ---
+        const symbols = ['🍒', '🍋', '🍇', '🔔', '💎', '7️⃣'];
+        
+        window.changeBet = function(val) {
+            if (currentBet + val >= 10 && currentBet + val <= balance) {
+                currentBet += val;
                 document.getElementById('bet-amount').textContent = currentBet;
             }
-        }
+        };
 
-        // Вращение
-        spinBtn.addEventListener('click', () => {
+        document.getElementById('spin-btn').addEventListener('click', () => {
+            const status = document.getElementById('slots-status');
             if (balance < currentBet) {
-                const msg = document.getElementById('message');
-                msg.textContent = "Недостаточно средств!";
-                msg.className = "message lose";
+                status.textContent = "Недостаточно средств!";
+                status.className = "game-status lose";
                 return;
             }
 
-            balance -= currentBet;
-            document.getElementById('balance').textContent = balance;
-            updateDbBalance();
-
-            spinBtn.disabled = true;
-
-            const reels = [
-                document.getElementById('reel1'),
-                document.getElementById('reel2'),
-                document.getElementById('reel3')
-            ];
-
+            updateBalance(balance - currentBet);
+            const reels = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
             reels.forEach(r => r.classList.add('spinning'));
+            document.getElementById('spin-btn').disabled = true;
 
-            setTimeout(() => stopReel(reels[0]), 800);
-            setTimeout(() => stopReel(reels[1]), 1200);
-            setTimeout(() => stopReel(reels[2]), 1600);
+            setTimeout(() => stopReel(reels[0]), 600);
+            setTimeout(() => stopReel(reels[1]), 1000);
+            setTimeout(() => stopReel(reels[2]), 1400);
 
             setTimeout(() => {
-                checkWin(reels);
-                spinBtn.disabled = false;
-            }, 1700);
+                document.getElementById('spin-btn').disabled = false;
+                const r1 = reels[0].textContent, r2 = reels[1].textContent, r3 = reels[2].textContent;
+                
+                if (r1 === r2 && r2 === r3) {
+                    let win = currentBet * (r1 === '7️⃣' ? 10 : 5);
+                    updateBalance(balance + win);
+                    status.textContent = `🎉 ДЖЕКПОТ! +${win}$`;
+                    status.className = "game-status win";
+                } else if (r1 === r2 || r2 === r3 || r1 === r3) {
+                    let win = currentBet * 2;
+                    updateBalance(balance + win);
+                    status.textContent = `Выигрыш! +${win}$`;
+                    status.className = "game-status win";
+                } else {
+                    status.textContent = "Мимо! Попробуй ещё.";
+                    status.className = "game-status lose";
+                }
+            }, 1500);
         });
 
         function stopReel(reel) {
@@ -337,30 +529,130 @@
             reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
         }
 
-        function checkWin(reels) {
-            const r1 = reels[0].textContent;
-            const r2 = reels[1].textContent;
-            const r3 = reels[2].textContent;
-            const msg = document.getElementById('message');
+        // --- ИГРА 2: ЛОТО ---
+        let selectedLottoNum = null;
+        const lottoGrid = document.getElementById('lotto-grid');
 
-            if (r1 === r2 && r2 === r3) {
-                let mult = (r1 === '7️⃣') ? 10 : 5;
-                let win = currentBet * mult;
-                balance += win;
-                msg.textContent = `🎉 ДЖЕКПОТ! +${win}$`;
-                msg.className = "message win";
-            } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                let win = currentBet * 2;
-                balance += win;
-                msg.textContent = `Победа! +${win}$`;
-                msg.className = "message win";
+        for (let i = 1; i <= 10; i++) {
+            const numBtn = document.createElement('div');
+            numBtn.className = 'lotto-num';
+            numBtn.textContent = i;
+            numBtn.onclick = () => {
+                document.querySelectorAll('.lotto-num').forEach(e => e.classList.remove('selected'));
+                numBtn.classList.add('selected');
+                selectedLottoNum = i;
+            };
+            lottoGrid.appendChild(numBtn);
+        }
+
+        document.getElementById('lotto-btn').addEventListener('click', () => {
+            const status = document.getElementById('lotto-status');
+            if (!selectedLottoNum) return alert("Выберите число!");
+            if (balance < 50) return alert("Нужно минимум 50$!");
+
+            updateBalance(balance - 50);
+            const winningNum = Math.floor(Math.random() * 10) + 1;
+
+            if (selectedLottoNum === winningNum) {
+                updateBalance(balance + 250);
+                status.textContent = `🎉 Выпало ${winningNum}! Вы выиграли 250$!`;
+                status.className = "game-status win";
             } else {
-                msg.textContent = "Попробуй еще раз!";
-                msg.className = "message lose";
+                status.textContent = `Выпало ${winningNum}. Вы не угадали.`;
+                status.className = "game-status lose";
             }
+        });
 
-            document.getElementById('balance').textContent = balance;
-            updateDbBalance();
+        // --- ИГРА 3: КАРТЫ (Больше/Меньше) ---
+        const cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+        const cardSuits = ['♠', '♥', '♦', '♣'];
+        let currentCardValue = 8;
+
+        function getRandomCard() {
+            return cards[Math.floor(Math.random() * cards.length)];
+        }
+
+        function playCards(guessHigher) {
+            const status = document.getElementById('cards-status');
+            if (balance < 20) return alert("Нужно минимум 20$ для игры в карты!");
+
+            updateBalance(balance - 20);
+            const newCard = getRandomCard();
+            const suit = cardSuits[Math.floor(Math.random() * cardSuits.length)];
+            
+            document.getElementById('card-display').textContent = newCard + suit;
+
+            const isHigher = newCard > currentCardValue;
+            const isWin = (guessHigher && isHigher) || (!guessHigher && !isHigher && newCard !== currentCardValue);
+
+            if (isWin) {
+                updateBalance(balance + 40);
+                status.textContent = `Победа! Вы получили 40$`;
+                status.className = "game-status win";
+            } else {
+                status.textContent = `Проигрыш! Карта оказалась ${newCard}`;
+                status.className = "game-status lose";
+            }
+            currentCardValue = newCard;
+        }
+
+        document.getElementById('card-higher').onclick = () => playCards(true);
+        document.getElementById('card-lower').onclick = () => playCards(false);
+
+        // --- ОБЩИЙ ЧАТ ---
+        function initChat() {
+            const messagesRef = ref(database, 'messages');
+            
+            // Получение новых сообщений
+            onValue(messagesRef, (snapshot) => {
+                const chatBox = document.getElementById('chat-messages');
+                chatBox.innerHTML = '';
+                const data = snapshot.val();
+                if (data) {
+                    Object.values(data).slice(-20).forEach(msg => {
+                        const msgDiv = document.createElement('div');
+                        msgDiv.className = 'chat-msg';
+                        msgDiv.innerHTML = `<span class="author">${msg.user}:</span> ${msg.text}`;
+                        chatBox.appendChild(msgDiv);
+                    });
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            });
+
+            // Отправка сообщения
+            document.getElementById('chat-send').onclick = sendChatMessage;
+            document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendChatMessage(); };
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (text && currentUser) {
+                push(ref(database, 'messages'), {
+                    user: currentUser,
+                    text: text,
+                    time: Date.now()
+                });
+                input.value = '';
+            }
+        }
+
+        // --- СПИСОК ИГРОКОВ ОНЛАЙН ---
+        function initOnlinePlayers() {
+            const onlineRef = ref(database, 'online');
+            onValue(onlineRef, (snapshot) => {
+                const playersList = document.getElementById('players-list');
+                playersList.innerHTML = '';
+                const data = snapshot.val();
+                if (data) {
+                    Object.values(data).forEach(p => {
+                        const item = document.createElement('div');
+                        item.className = 'player-item';
+                        item.innerHTML = `<span>🟢 ${p.name}</span><span style="color:#ffcc00">${p.balance}$</span>`;
+                        playersList.appendChild(item);
+                    });
+                }
+            });
         }
     </script>
 </body>
