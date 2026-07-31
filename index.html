@@ -353,7 +353,7 @@
 
         <!-- ЭКРАН ВХОДА / РЕГИСТРАЦИИ -->
         <div class="auth-box" id="auth-box">
-            <input type="text" id="username" placeholder="Ваш никнейм" maxlength="15">
+            <input type="text" id="username" placeholder="Ваш никнейм" maxlength="20">
             <input type="password" id="password" placeholder="Ваш пароль" maxlength="20">
             <div class="auth-error" id="auth-error"></div>
             <button class="btn-main" id="login-btn">Войти / Зарегистрироваться</button>
@@ -451,6 +451,11 @@
         let currentBet = 50;
         let onlineRef = null;
 
+        // Преобразование любого никнейма (в т.ч. русского) в безопасный ключ для Firebase
+        function getSafeKey(str) {
+            return btoa(unescape(encodeURIComponent(str.toLowerCase().trim()))).replace(/=/g, "_").replace(/\//g, "-");
+        }
+
         // Авто-вход при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
             const savedUser = localStorage.getItem('casino_user');
@@ -478,13 +483,8 @@
 
         // Функция Авторизации / Регистрации
         function performLogin(username, password) {
-            const safeKey = username.toLowerCase().replace(/[^a-z0-9_]/g, "");
+            const safeKey = getSafeKey(username);
             const errDiv = document.getElementById('auth-error');
-
-            if (!safeKey) {
-                errDiv.textContent = "Используйте английские буквы или цифры!";
-                return;
-            }
 
             const userRef = database.ref('users/' + safeKey);
 
@@ -554,7 +554,7 @@
             balance = newBalance;
             document.getElementById('balance').textContent = balance;
             if (currentUser) {
-                const safeKey = currentUser.toLowerCase().replace(/[^a-z0-9_]/g, "");
+                const safeKey = getSafeKey(currentUser);
                 database.ref('users/' + safeKey).update({ balance: balance });
                 database.ref('online/' + safeKey).update({ balance: balance });
             }
@@ -691,7 +691,7 @@
         document.getElementById('card-higher').onclick = () => playCards(true);
         document.getElementById('card-lower').onclick = () => playCards(false);
 
-        // --- ЧАТИ В РЕАЛЬНОМ ВРЕМЕНИ ---
+        // --- ЧАТ В РЕАЛЬНОМ ВРЕМЕНИ ---
         function initChat() {
             const chatBox = document.getElementById('chat-messages');
 
