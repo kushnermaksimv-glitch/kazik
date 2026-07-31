@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Casino Online & Chat</title>
+    <title>Casino Online & Chat</title>
 
     <style>
         * {
@@ -16,163 +16,211 @@
         }
 
         body {
-            background: #090314;
-            color: #fff;
-            min-height: 100vh;
+            background: #0f0f12;
+            color: #e1e1e6;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
         }
 
         .casino-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid #ff007f;
-            box-shadow: 0 0 15px #ff007f, inset 0 0 15px rgba(255, 0, 127, 0.2);
-            border-radius: 20px;
-            padding: 15px;
-            text-align: center;
+            background: #18181c;
             width: 100%;
-            max-width: 420px;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .app-header {
+            padding: 12px 16px;
+            background: #202024;
+            border-bottom: 1px solid #2e2e35;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         h1 {
-            color: #00f3ff;
-            text-shadow: 0 0 10px #00f3ff;
-            font-size: 1.6rem;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         /* Авторизация */
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+        }
+
         .auth-box {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+            background: #202024;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid #2e2e35;
         }
 
         input {
-            background: #150a2a;
-            border: 1px solid #00f3ff;
+            background: #121214;
+            border: 1px solid #323238;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             color: #fff;
             font-size: 1rem;
             text-align: center;
             outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: #6366f1;
         }
 
         .btn-main {
-            background: #00f3ff;
-            color: #000;
+            background: #6366f1;
+            color: #fff;
             border: none;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-main:active {
+            background: #4f46e5;
         }
 
         .auth-error {
-            color: #ff3333;
+            color: #f87171;
             font-size: 0.85rem;
             min-height: 18px;
+            text-align: center;
         }
 
         /* Основной интерфейс */
         .main-app {
             display: none;
             flex-direction: column;
-            gap: 10px;
+            height: 100%;
+            justify-content: space-between;
         }
 
         .user-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #120826;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #00f3ff;
+            background: #202024;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2e2e35;
             font-size: 0.9rem;
         }
 
-        .user-bar span { color: #ffcc00; font-weight: bold; }
+        .user-bar span { color: #10b981; font-weight: bold; }
 
         .btn-logout {
-            background: #ff007f;
-            border: none;
-            color: #fff;
-            padding: 5px 10px;
+            background: #2e2e35;
+            border: 1px solid #3e3e46;
+            color: #a1a1aa;
+            padding: 6px 12px;
             border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: bold;
+            font-size: 0.8rem;
             cursor: pointer;
         }
 
-        /* Навигация по вкладкам */
+        .btn-logout:active {
+            background: #3e3e46;
+            color: #fff;
+        }
+
+        /* Навигация по вкладкам СНИЗУ */
         .nav-tabs {
             display: flex;
             justify-content: space-around;
-            background: #150a2a;
-            border-radius: 10px;
-            padding: 4px;
+            background: #202024;
+            border-top: 1px solid #2e2e35;
+            padding: 8px 4px;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
-            color: #aaa;
-            padding: 8px 10px;
+            color: #a1a1aa;
+            padding: 10px 4px;
             font-size: 0.85rem;
-            font-weight: bold;
+            font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
-            width: 25%;
+            flex: 1;
+            text-align: center;
+            transition: color 0.2s, background 0.2s;
         }
 
         .tab-btn.active {
-            background: #ff007f;
-            color: #fff;
-            box-shadow: 0 0 8px #ff007f;
+            background: #2e2e35;
+            color: #ffffff;
         }
 
         /* Контент вкладок */
+        .tab-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .tab-content {
             display: none;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 15px;
-            min-height: 260px;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            max-width: 450px;
+            width: 100%;
+            margin: 0 auto;
         }
 
         .tab-content.active {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
         /* Игра: Слоты */
         .slots-container {
             display: flex;
             justify-content: space-between;
-            background: #000;
-            padding: 10px;
+            background: #121214;
+            padding: 16px;
             border-radius: 12px;
-            border: 2px solid #ffcc00;
-            margin: 15px 0;
+            border: 1px solid #2e2e35;
+            margin: 20px 0;
         }
 
         .reel {
             width: 30%;
-            height: 75px;
-            background: #111;
+            height: 90px;
+            background: #202024;
             border-radius: 8px;
-            font-size: 2.5rem;
-            line-height: 75px;
+            font-size: 3rem;
+            line-height: 90px;
+            text-align: center;
             overflow: hidden;
+            border: 1px solid #2e2e35;
         }
 
         .spinning { animation: spin 0.1s infinite linear; }
@@ -186,131 +234,135 @@
         .lotto-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin: 15px 0;
+            gap: 10px;
+            margin: 20px 0;
         }
 
         .lotto-num {
-            background: #221548;
-            border: 1px solid #00f3ff;
-            padding: 10px 0;
+            background: #202024;
+            border: 1px solid #2e2e35;
+            padding: 14px 0;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            text-align: center;
         }
 
         .lotto-num.selected {
-            background: #ff007f;
-            border-color: #fff;
+            background: #6366f1;
+            border-color: #818cf8;
+            color: #fff;
         }
 
         /* Игра: Карты */
         .card-display {
             font-size: 4rem;
-            background: #fff;
-            color: #000;
-            width: 90px;
-            height: 120px;
-            margin: 10px auto;
-            border-radius: 10px;
+            background: #202024;
+            color: #fff;
+            width: 110px;
+            height: 150px;
+            margin: 20px auto;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            border: 1px solid #3e3e46;
         }
 
         .card-btns {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .card-btn {
             flex: 1;
-            padding: 10px;
+            padding: 14px;
             border-radius: 8px;
             border: none;
             font-weight: bold;
             color: #fff;
             cursor: pointer;
+            font-size: 0.95rem;
         }
 
-        .btn-higher { background: #00ff66; color: #000; }
-        .btn-lower { background: #ff3333; }
+        .btn-higher { background: #10b981; }
+        .btn-lower { background: #ef4444; }
 
-        /* Общие кнопки управления ставкой */
+        /* Управление ставкой */
         .bet-control {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .bet-btn {
-            background: #221548;
-            border: 1px solid #00f3ff;
+            background: #202024;
+            border: 1px solid #3e3e46;
             color: #fff;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             cursor: pointer;
         }
 
         .action-btn {
-            background: linear-gradient(45deg, #ff007f, #ffcc00);
+            background: #6366f1;
             border: none;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 8px;
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
             width: 100%;
         }
 
-        .action-btn:disabled { background: #333; }
+        .action-btn:disabled { background: #27272a; color: #71717a; }
 
         /* Чат */
-        .chat-messages {
-            height: 180px;
-            overflow-y: auto;
-            background: #0a0518;
-            border-radius: 8px;
-            padding: 8px;
+        .chat-container {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            background: #121214;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             text-align: left;
-            font-size: 0.85rem;
-            border: 1px solid #221548;
+            font-size: 0.9rem;
+            border: 1px solid #2e2e35;
+            max-height: calc(100vh - 280px);
         }
 
-        .chat-msg {
-            word-break: break-word;
-        }
-
-        .chat-msg .author {
-            color: #00f3ff;
-            font-weight: bold;
-        }
+        .chat-msg { word-break: break-word; }
+        .chat-msg .author { color: #818cf8; font-weight: bold; }
 
         .chat-input-box {
             display: flex;
-            gap: 5px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 10px;
         }
 
         .chat-input-box input {
             flex: 1;
-            padding: 8px;
-            font-size: 0.9rem;
+            padding: 10px;
+            font-size: 0.95rem;
             text-align: left;
         }
 
         .chat-input-box button {
-            padding: 8px 12px;
+            padding: 10px 16px;
             border-radius: 8px;
         }
 
@@ -318,45 +370,48 @@
         .players-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 120px;
+            gap: 6px;
+            max-height: 100px;
             overflow-y: auto;
         }
 
         .player-item {
             display: flex;
             justify-content: space-between;
-            background: #150a2a;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            background: #202024;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
         }
 
         .game-status {
-            min-height: 20px;
+            min-height: 24px;
             font-weight: bold;
-            font-size: 0.9rem;
-            margin-top: 5px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            text-align: center;
         }
-        .win { color: #00ff66; }
-        .lose { color: #ff3333; }
+        .win { color: #10b981; }
+        .lose { color: #ef4444; }
     </style>
 
-    <!-- Подключаем Firebase v8 (Гарантия стабильной работы чата и БД) -->
+    <!-- Подключаем Firebase v8 -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
     <div class="casino-card">
-        <h1>CASINO ONLINE</h1>
-
+        
         <!-- ЭКРАН ВХОДА / РЕГИСТРАЦИИ -->
-        <div class="auth-box" id="auth-box">
-            <input type="text" id="username" placeholder="Ваш никнейм" maxlength="20">
-            <input type="password" id="password" placeholder="Ваш пароль" maxlength="20">
-            <div class="auth-error" id="auth-error"></div>
-            <button class="btn-main" id="login-btn">Войти / Зарегистрироваться</button>
+        <div class="auth-container" id="auth-box">
+            <div class="auth-box">
+                <h1 style="text-align: center; margin-bottom: 8px;">Вход в казино</h1>
+                <input type="text" id="username" placeholder="Ваш никнейм" maxlength="20">
+                <input type="password" id="password" placeholder="Ваш пароль" maxlength="20">
+                <div class="auth-error" id="auth-error"></div>
+                <button class="btn-main" id="login-btn">Войти / Создать</button>
+            </div>
         </div>
 
         <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
@@ -364,65 +419,86 @@
             
             <!-- Панель игрока -->
             <div class="user-bar">
-                <div>Игрок: <b id="player-display" style="color:#00f3ff"></b></div>
+                <div>Игрок: <b id="player-display" style="color:#818cf8"></b></div>
                 <div>Баланс: <span id="balance">0</span> $</div>
                 <button class="btn-logout" onclick="logout()">Выйти</button>
             </div>
 
-            <!-- Вкладки навигации -->
+            <!-- Контент Вкладок -->
+            <div class="tab-container">
+                
+                <!-- Вкладка 1: Слоты -->
+                <div id="tab-slots" class="tab-content active">
+                    <div>
+                        <div class="slots-container">
+                            <div class="reel" id="reel1">🎰</div>
+                            <div class="reel" id="reel2">🎰</div>
+                            <div class="reel" id="reel3">🎰</div>
+                        </div>
+                        <div class="bet-control">
+                            <button class="bet-btn" onclick="changeBet(-10)">-</button>
+                            <span>Ставка: <b id="bet-amount" style="color: #818cf8;">50</b></span>
+                            <button class="bet-btn" onclick="changeBet(10)">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="action-btn" id="spin-btn">Крутить</button>
+                        <div class="game-status" id="slots-status"></div>
+                    </div>
+                </div>
+
+                <!-- Вкладка 2: Лото -->
+                <div id="tab-lotto" class="tab-content">
+                    <div>
+                        <p style="font-size:0.85rem; color:#a1a1aa; text-align:center;">Угадай выпавшее число (1-10) и получи x5!</p>
+                        <div class="lotto-grid" id="lotto-grid"></div>
+                    </div>
+                    <div>
+                        <button class="action-btn" id="lotto-btn">Испытать удачу (50$)</button>
+                        <div class="game-status" id="lotto-status"></div>
+                    </div>
+                </div>
+
+                <!-- Вкладка 3: Карты -->
+                <div id="tab-cards" class="tab-content">
+                    <div>
+                        <p style="font-size:0.85rem; color:#a1a1aa; text-align:center;">Следующая карта будет больше или меньше?</p>
+                        <div class="card-display" id="card-display">❓</div>
+                    </div>
+                    <div>
+                        <div class="card-btns">
+                            <button class="card-btn btn-higher" id="card-higher">Больше ↑</button>
+                            <button class="card-btn btn-lower" id="card-lower">Меньше ↓</button>
+                        </div>
+                        <div class="game-status" id="cards-status"></div>
+                    </div>
+                </div>
+
+                <!-- Вкладка 4: Чат -->
+                <div id="tab-chat" class="tab-content">
+                    <div class="chat-container">
+                        <div>
+                            <div class="chat-messages" id="chat-messages"></div>
+                            <div class="chat-input-box">
+                                <input type="text" id="chat-input" placeholder="Сообщение..." maxlength="100">
+                                <button class="btn-main" id="chat-send">▶</button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <p style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 5px;">Игроки в сети:</p>
+                            <div class="players-list" id="players-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Навигация СНИЗУ -->
             <div class="nav-tabs">
                 <button class="tab-btn active" onclick="switchTab('tab-slots', this)">🎰 Слоты</button>
                 <button class="tab-btn" onclick="switchTab('tab-lotto', this)">🎱 Лото</button>
                 <button class="tab-btn" onclick="switchTab('tab-cards', this)">🃏 Карты</button>
                 <button class="tab-btn" onclick="switchTab('tab-chat', this)">💬 Чат</button>
-            </div>
-
-            <!-- Вкладка 1: Слоты -->
-            <div id="tab-slots" class="tab-content active">
-                <div class="slots-container">
-                    <div class="reel" id="reel1">🎰</div>
-                    <div class="reel" id="reel2">🎰</div>
-                    <div class="reel" id="reel3">🎰</div>
-                </div>
-                <div class="bet-control">
-                    <button class="bet-btn" onclick="changeBet(-10)">-</button>
-                    <span>Ставка: <b id="bet-amount" style="color: #00f3ff;">50</b></span>
-                    <button class="bet-btn" onclick="changeBet(10)">+</button>
-                </div>
-                <button class="action-btn" id="spin-btn">Крутить</button>
-                <div class="game-status" id="slots-status"></div>
-            </div>
-
-            <!-- Вкладка 2: Лото -->
-            <div id="tab-lotto" class="tab-content">
-                <p style="font-size:0.85rem; color:#aaa;">Угадай выпавшее число (1-10) и получи x5!</p>
-                <div class="lotto-grid" id="lotto-grid"></div>
-                <button class="action-btn" id="lotto-btn">Испытать удачу (50$)</button>
-                <div class="game-status" id="lotto-status"></div>
-            </div>
-
-            <!-- Вкладка 3: Карты (Больше/Меньше) -->
-            <div id="tab-cards" class="tab-content">
-                <p style="font-size:0.85rem; color:#aaa;">Следующая карта будет больше или меньше?</p>
-                <div class="card-display" id="card-display">❓</div>
-                <div class="card-btns">
-                    <button class="card-btn btn-higher" id="card-higher">Больше ↑</button>
-                    <button class="card-btn btn-lower" id="card-lower">Меньше ↓</button>
-                </div>
-                <div class="game-status" id="cards-status"></div>
-            </div>
-
-            <!-- Вкладка 4: Чат и Онлайн-игроки -->
-            <div id="tab-chat" class="tab-content">
-                <div class="chat-messages" id="chat-messages"></div>
-                <div class="chat-input-box">
-                    <input type="text" id="chat-input" placeholder="Сообщение..." maxlength="100">
-                    <button class="btn-main" id="chat-send">▶</button>
-                </div>
-                <div style="margin-top: 10px;">
-                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 5px;">Игроки в сети:</p>
-                    <div class="players-list" id="players-list"></div>
-                </div>
             </div>
 
         </div>
@@ -444,14 +520,12 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Переменные состояния
         let currentUser = "";
         let currentPass = "";
         let balance = 1000;
         let currentBet = 50;
         let onlineRef = null;
 
-        // Преобразование любого никнейма (в т.ч. русского) в безопасный ключ для Firebase
         function getSafeKey(str) {
             return btoa(unescape(encodeURIComponent(str.toLowerCase().trim()))).replace(/=/g, "_").replace(/\//g, "-");
         }
@@ -466,7 +540,6 @@
             }
         });
 
-        // Обработчик кнопки Входа / Регистрации
         document.getElementById('login-btn').addEventListener('click', () => {
             const userVal = document.getElementById('username').value.trim();
             const passVal = document.getElementById('password').value.trim();
@@ -481,16 +554,13 @@
             performLogin(userVal, passVal);
         });
 
-        // Функция Авторизации / Регистрации
         function performLogin(username, password) {
             const safeKey = getSafeKey(username);
             const errDiv = document.getElementById('auth-error');
-
             const userRef = database.ref('users/' + safeKey);
 
             userRef.once('value').then((snapshot) => {
                 if (snapshot.exists()) {
-                    // Пользователь есть -> Проверка пароля
                     const data = snapshot.val();
                     if (data.password === password) {
                         currentUser = username;
@@ -503,7 +573,6 @@
                         localStorage.removeItem('casino_pass');
                     }
                 } else {
-                    // Пользователя нет -> Создание аккаунта (Регистрация)
                     currentUser = username;
                     currentPass = password;
                     balance = 1000;
@@ -519,9 +588,7 @@
             });
         }
 
-        // Запуск игровой сессии
         function startSession(safeKey, displayName) {
-            // Сохранение сессии на устройстве
             localStorage.setItem('casino_user', displayName);
             localStorage.setItem('casino_pass', currentPass);
 
@@ -531,17 +598,14 @@
             document.getElementById('auth-box').style.display = 'none';
             document.getElementById('main-app').style.display = 'flex';
 
-            // Присутствие в сети (Онлайн)
             onlineRef = database.ref('online/' + safeKey);
             onlineRef.set({ name: displayName, balance: balance });
             onlineRef.onDisconnect().remove();
 
-            // Инициализация сервисов
             initChat();
             initOnlinePlayers();
         }
 
-        // Выход из системы
         function logout() {
             if (onlineRef) onlineRef.remove();
             localStorage.removeItem('casino_user');
@@ -549,7 +613,6 @@
             location.reload();
         }
 
-        // Обновление баланса в базе
         function updateBalance(newBalance) {
             balance = newBalance;
             document.getElementById('balance').textContent = balance;
@@ -560,7 +623,6 @@
             }
         }
 
-        // Вкладки
         window.switchTab = function(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -568,7 +630,7 @@
             btn.classList.add('active');
         };
 
-        // --- ИГРА 1: СЛОТЫ ---
+        // --- СЛОТЫ ---
         const symbols = ['🍒', '🍋', '🍇', '🔔', '💎', '7️⃣'];
         
         window.changeBet = function(val) {
@@ -621,7 +683,7 @@
             reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
         }
 
-        // --- ИГРА 2: ЛОТО ---
+        // --- ЛОТО ---
         let selectedLottoNum = null;
         const lottoGrid = document.getElementById('lotto-grid');
 
@@ -655,7 +717,7 @@
             }
         });
 
-        // --- ИГРА 3: КАРТЫ (Больше/Меньше) ---
+        // --- КАРТЫ ---
         const cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
         const cardSuits = ['♠', '♥', '♦', '♣'];
         let currentCardValue = 8;
@@ -691,11 +753,10 @@
         document.getElementById('card-higher').onclick = () => playCards(true);
         document.getElementById('card-lower').onclick = () => playCards(false);
 
-        // --- ЧАТ В РЕАЛЬНОМ ВРЕМЕНИ ---
+        // --- ЧАТ ---
         function initChat() {
             const chatBox = document.getElementById('chat-messages');
 
-            // Подписка на сообщения
             database.ref('messages').limitToLast(30).on('value', (snapshot) => {
                 chatBox.innerHTML = '';
                 const data = snapshot.val();
@@ -710,7 +771,6 @@
                 }
             });
 
-            // Отправка сообщений
             document.getElementById('chat-send').onclick = sendChatMessage;
             document.getElementById('chat-input').onkeypress = (e) => { 
                 if (e.key === 'Enter') sendChatMessage(); 
@@ -732,7 +792,7 @@
             }
         }
 
-        // --- СПИСОК ОНЛАЙН ИГРОКОВ ---
+        // --- ОНЛАЙН ---
         function initOnlinePlayers() {
             const playersList = document.getElementById('players-list');
             database.ref('online').on('value', (snapshot) => {
@@ -742,14 +802,13 @@
                     Object.values(data).forEach(p => {
                         const item = document.createElement('div');
                         item.className = 'player-item';
-                        item.innerHTML = `<span>🟢 ${escapeHtml(p.name)}</span><span style="color:#ffcc00">${p.balance}$</span>`;
+                        item.innerHTML = `<span>🟢 ${escapeHtml(p.name)}</span><span style="color:#10b981">${p.balance}$</span>`;
                         playersList.appendChild(item);
                     });
                 }
             });
         }
 
-        // Защита от XSS в чате
         function escapeHtml(text) {
             return String(text).replace(/&/g, "&amp;")
                                .replace(/</g, "&lt;")
